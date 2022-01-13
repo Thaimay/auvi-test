@@ -18,23 +18,32 @@ class AudioView extends GetView<AudioController> {
       body: Container(
         alignment: Alignment.topCenter,
         child: Obx(() => AudioWidget.assets(
-          path: "assets/audios/CaCanCau.mp3",
-          play: controller.play.value,
-          child: MaterialButton(
-              color: Colors.blue,
-              textColor: Colors.white,
-              child: Column(
-                children: [
-                  Icon(controller.play.value ? Icons.pause : Icons.play_arrow),
-                  Text(
-                    controller.play.value ? "pause" : "play",
-                    style: const TextStyle(fontSize: 18),
+              path: "assets/audios/CaCanCau.mp3",
+              play: controller.play.value,
+              onReadyToPlay: (duration) {
+                //onReadyToPlay
+              },
+              onPositionChanged: (current, duration) {
+                //onPositionChanged
+              },
+              child: MaterialButton(
+                  color: Colors.blue,
+                  textColor: Colors.white,
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Icon(controller.play.value
+                          ? Icons.pause
+                          : Icons.play_arrow),
+                      Text(
+                        controller.play.value ? "pause" : "play",
+                        style: const TextStyle(fontSize: 18),
+                      ),
+                    ],
                   ),
-                ],
-              ),
-              onPressed: () =>
-              controller.play.value = !controller.play.value),
-        )),
+                  onPressed: () =>
+                      controller.play.value = !controller.play.value),
+            )),
       ),
     );
   }

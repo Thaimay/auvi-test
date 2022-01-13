@@ -19,6 +19,4 @@ class AudioController extends GetxController {
   @override
   void onClose() {}
   void increment() => count.value++;
-
-
 }
