@@ -23,9 +23,14 @@ class AudioView extends GetView<AudioController> {
           child: MaterialButton(
               color: Colors.blue,
               textColor: Colors.white,
-              child: Text(
-                controller.play.value ? "pause" : "play",
-                style: const TextStyle(fontSize: 18),
+              child: Column(
+                children: [
+                  Icon(controller.play.value ? Icons.pause : Icons.play_arrow),
+                  Text(
+                    controller.play.value ? "pause" : "play",
+                    style: const TextStyle(fontSize: 18),
+                  ),
+                ],
               ),
               onPressed: () =>
               controller.play.value = !controller.play.value),

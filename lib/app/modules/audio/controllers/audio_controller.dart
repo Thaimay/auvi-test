@@ -1,3 +1,4 @@
+import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:get/get.dart';
 
 class AudioController extends GetxController {
@@ -18,4 +19,6 @@ class AudioController extends GetxController {
   @override
   void onClose() {}
   void increment() => count.value++;
+
+
 }
