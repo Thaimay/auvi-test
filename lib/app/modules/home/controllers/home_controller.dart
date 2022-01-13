@@ -39,25 +39,25 @@ class HomeController extends GetxController {
   @override
   void onClose() {}
 
-  Future<File?> pickerFile(pathFile, types)async{
-    final result = await FilePicker.platform.pickFiles(type: types);
-    if(result == null) return File(pathFile);
-    return File(result.files.single.path!);
-  }
+  // Future<File?> pickerFile(pathFile, types)async{
+  //   final result = await FilePicker.platform.pickFiles(type: types);
+  //   if(result == null) return File(pathFile);
+  //   return File(result.files.single.path!);
+  // }
 
-  void chooseFileVideo()async{
-    final result = await pickerFile(this.pathFileVideo.value,FileType.video);
-    if(result == null) return;
-    this.pathFileVideo.value = result.toString();
-    print("abc....${this.pathFileVideo}");
-  }
+  // void chooseFileVideo()async{
+  //   final result = await pickerFile(pathFileVideo.value,FileType.video);
+  //   if(result == null) return;
+  //   pathFileVideo.value = result.toString();
+  //   print("abc....$pathFileVideo");
+  // }
 
   void fastRewind()async{
-    await asset.seekBy(Duration(seconds: -1));
+    await asset.seekBy(const Duration(seconds: -1));
   }
 
   void fastForward()async{
-    await asset.seekBy(Duration(seconds: 1));
+    await asset.seekBy(const Duration(seconds: 1));
   }
 
   void speedUp(){
@@ -86,7 +86,7 @@ class HomeController extends GetxController {
               seconds: int.parse(currentPosition.replaceAll(":", "").substring(3,5))));
         }
       }else{
-        asset.stop();
+        asset.pause();
       }
     } catch (t) {
       //mp3 unreachable
@@ -103,28 +103,28 @@ class HomeController extends GetxController {
     dataSourceList.add(
       BetterPlayerDataSource(
         BetterPlayerDataSourceType.network,
-        "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
+        "https://multiplatform-f.akamaihd.net/i/multi/will/bunny/big_buck_bunny_,640x360_400,640x360_700,640x360_1000,950x540_1500,.f4v.csmil/master.m3u8",
       ),
     );
     dataSourceList.add(
       BetterPlayerDataSource(BetterPlayerDataSourceType.network,
-          "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4"),
+          "https://multiplatform-f.akamaihd.net/i/multi/april11/sintel/sintel-hd_,512x288_450_b,640x360_700_b,768x432_1000_b,1024x576_1400_m,.mp4.csmil/master.m3u8"),
     );
     dataSourceList.add(
       BetterPlayerDataSource(BetterPlayerDataSourceType.network,
-          "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4"),
+          "https://devstreaming-cdn.apple.com/videos/streaming/examples/img_bipbop_adv_example_fmp4/master.m3u8"),
     );
     dataSourceList.add(
       BetterPlayerDataSource(BetterPlayerDataSourceType.network,
-          "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4"),
+          "https://cph-p2p-msl.akamaized.net/hls/live/2000341/test/master.m3u8"),
     );
     return dataSourceList;
   }
 
   void video(int index){
-    print(dataSourceList.length);
+    this.index.value = index;
     betterPlayerController = BetterPlayerController(
-        BetterPlayerConfiguration(),
+        const BetterPlayerConfiguration(),
         betterPlayerDataSource: dataSourceList[index]);
   }
 }
