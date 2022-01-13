@@ -1,4 +1,6 @@
 import 'package:assets_audio_player/assets_audio_player.dart';
+import 'package:auvi/app/modules/audio/views/compoments/item_audio.dart';
+import 'package:auvi/app/routes/app_pages.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
@@ -11,40 +13,25 @@ class AudioView extends GetView<AudioController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('AudioView'),
-        centerTitle: true,
-      ),
-      body: Container(
-        alignment: Alignment.topCenter,
-        child: Obx(() => AudioWidget.assets(
-              path: "assets/audios/CaCanCau.mp3",
-              play: controller.play.value,
-              onReadyToPlay: (duration) {
-                //onReadyToPlay
-              },
-              onPositionChanged: (current, duration) {
-                //onPositionChanged
-              },
-              child: MaterialButton(
-                  color: Colors.blue,
-                  textColor: Colors.white,
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Icon(controller.play.value
-                          ? Icons.pause
-                          : Icons.play_arrow),
-                      Text(
-                        controller.play.value ? "pause" : "play",
-                        style: const TextStyle(fontSize: 18),
-                      ),
-                    ],
-                  ),
-                  onPressed: () =>
-                      controller.play.value = !controller.play.value),
-            )),
-      ),
-    );
+        appBar: AppBar(
+          title: const Text('AudioView'),
+          centerTitle: true,
+        ),
+        body: ListView.builder(
+            padding: const EdgeInsets.all(8),
+            itemCount: controller.audiosList.length,
+            itemBuilder: (BuildContext context, int index) {
+              return Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: ItemAudio(
+                  image: "${controller.audiosList[index].metas.image?.path}",
+                  name: "${controller.audiosList[index].metas.title}",
+                  artist: "${controller.audiosList[index].metas.artist}",
+                  album: "${controller.audiosList[index].metas.album}",
+                  onTap: () => Get.toNamed(Routes.RUN_AUDIO,
+                      arguments: index),
+                ),
+              );
+            }),);
   }
 }
