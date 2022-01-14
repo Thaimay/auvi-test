@@ -22,8 +22,8 @@ class VideoPlayerView extends StatelessWidget {
               return AspectRatio(
                   aspectRatio: 16 / 9,
                   child: BetterPlayerPlaylist(
-                      betterPlayerConfiguration: const BetterPlayerConfiguration(),
-                      betterPlayerPlaylistConfiguration: const BetterPlayerPlaylistConfiguration(),
+                      betterPlayerConfiguration: const BetterPlayerConfiguration(autoPlay: true),
+                      betterPlayerPlaylistConfiguration: const BetterPlayerPlaylistConfiguration(loopVideos: true),
                       betterPlayerDataSourceList:  _.dataSourceList)
               );
             }
