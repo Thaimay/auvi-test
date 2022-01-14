@@ -5,15 +5,48 @@ class AudioController extends GetxController {
   late AssetsAudioPlayer assetsAudioPlayer;
 
   final index = 0.obs;
-
   final RxBool play = false.obs;
 
   final audioList = [
-    Audio('assets/audios/CaCanCau.mp3'),
-    Audio.network("https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"),
-    Audio.network("https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3"),
-    Audio.network("https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3"),
-    Audio.network("https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3")
+    Audio('assets/audios/CaCanCau.mp3',
+        metas: Metas(
+            title: "Cá cắn câu",
+            artist: " Mlee, Isaac",
+            album: "",
+            image: const MetasImage.network(
+                "https://avatar-ex-swe.nixcdn.com/song/share/2020/09/24/f/a/f/2/1600913328907.jpg"))),
+    Audio.network(
+        "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3",
+        metas: Metas(
+            title: "Cá cắn câu",
+            artist: " Mlee, Isaac",
+            album: "abc",
+            image: const MetasImage.network(
+                "https://avatar-ex-swe.nixcdn.com/song/share/2020/09/24/f/a/f/2/1600913328907.jpg"))),
+    Audio.network(
+        "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3",
+        metas: Metas(
+            title: "Cá cắn câu",
+            artist: " Mlee, Isaac",
+            album: "",
+            image: const MetasImage.network(
+                "https://media-cdn.laodong.vn/Storage/NewsPortal/2021/5/26/913299/Ngan-Ha25.jpg"))),
+    Audio.network(
+        "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3",
+        metas: Metas(
+            title: "Cá cắn câu",
+            artist: " Mlee, Isaac",
+            album: "",
+            image: const MetasImage.network(
+                "https://avatar-ex-swe.nixcdn.com/song/share/2020/09/24/f/a/f/2/1600913328907.jpg"))),
+    Audio.network(
+        "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3",
+        metas: Metas(
+            title: "Cá cắn câu",
+            artist: " Mlee, Isaac",
+            album: "",
+            image: const MetasImage.network(
+                "https://media-cdn.laodong.vn/Storage/NewsPortal/2021/5/26/913299/Ngan-Ha25.jpg"))),
   ];
 
   final count = 0.obs;
@@ -28,7 +61,7 @@ class AudioController extends GetxController {
   @override
   void onReady() {
     super.onReady();
-    check();
+    checkNotification();
   }
 
   @override
@@ -69,7 +102,7 @@ class AudioController extends GetxController {
   }
 
   void checkPreAudio() async {
-    if (index.value > 0) {
+    if (index.value >= 0) {
       index.value = --index.value;
       await assetsAudioPlayer.previous();
     }
@@ -83,9 +116,13 @@ class AudioController extends GetxController {
     await assetsAudioPlayer.seekBy(const Duration(seconds: 10));
   }
 
-  void check() {
+  void checkNotification() {
     AssetsAudioPlayer.setupNotificationsOpenAction((notification) {
       return true;
     });
+  }
+
+  Audio find(List<Audio> source, String fromPath) {
+    return source.firstWhere((element) => element.path == fromPath);
   }
 }
