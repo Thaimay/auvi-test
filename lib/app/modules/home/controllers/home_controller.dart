@@ -9,12 +9,11 @@ import 'package:get/get.dart';
 
 class HomeController extends GetxController {
 
-  final pathFileVideo = "".obs;
-  final pathFileAudio = "".obs;
   late AssetsAudioPlayer asset;
-  final abc = "ggg".obs;
   final playSpeed = 1.0.obs;
   final index = 0.obs;
+  int indexAudio = 0;
+  final isLoading = true.obs;
   final image = <String>[
     "https://upload.wikimedia.org/wikipedia/commons/e/e4/Elephants_Dream_cover.jpg",
     "https://www.blendernation.com/wp-content/uploads/2008/05/afbeelding-1.png",
@@ -72,21 +71,52 @@ class HomeController extends GetxController {
     }
   }
 
+  void previousAudio()async{
+    if(indexAudio != 0){
+      isLoading.value = false;
+      indexAudio = --indexAudio;
+      await asset.previous();
+      isLoading.value = true;
+    }
+  }
+
+  void nextAudio()async{
+    if(indexAudio != 3){
+      isLoading.value = false;
+      indexAudio = ++indexAudio;
+      await asset.next();
+      isLoading.value = true;
+    }
+  }
+
   void playAudio()async{
+    isLoading.value = false;
     try {
       final currentPosition = asset.currentPosition.value.toString();
       if(!asset.isPlaying.value){
         await asset.open(
-            Audio("assets/audios/CaCanCau.mp3"),
-            respectSilentMode: true
+            Playlist(
+              startIndex: indexAudio,
+              audios: [
+                Audio.network("https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"),
+                Audio.network("https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3"),
+                Audio.network("https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3"),
+                Audio.network("https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3"),
+              ]
+            ),
+            respectSilentMode: true,
+            loopMode: LoopMode.playlist
         );
+        isLoading.value = true;
         if(currentPosition != "0:00:00.000000"){
           asset.seek(Duration(hours: int.parse(currentPosition.replaceAll(":", "").substring(0,1)),
               minutes: int.parse(currentPosition.replaceAll(":", "").substring(1,3)),
               seconds: int.parse(currentPosition.replaceAll(":", "").substring(3,5))));
+          isLoading.value = true;
         }
       }else{
         asset.pause();
+        isLoading.value = true;
       }
     } catch (t) {
       //mp3 unreachable
