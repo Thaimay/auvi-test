@@ -19,7 +19,10 @@ class HomeView extends GetView<HomeController> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             ElevatedButton(
-            onPressed: () => Get.to(VideoPlayerView()),
+            onPressed: (){
+              controller.loadDataVideo();
+              Get.to(VideoPlayerView());
+            },
             child: const Text("Video Player")),
             ElevatedButton(
                 onPressed: () => Get.to(AudioPlayerView()),

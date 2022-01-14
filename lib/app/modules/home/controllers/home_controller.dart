@@ -26,6 +26,8 @@ class HomeController extends GetxController {
 
   @override
   void onInit() {
+    initDataVideo();
+    loadDataVideo();
     asset =  AssetsAudioPlayer();
     super.onInit();
   }
@@ -123,38 +125,46 @@ class HomeController extends GetxController {
     }
   }
 
-  List<BetterPlayerDataSource> createDataSet() {
+  void initDataVideo(){
     dataSourceList.add(
       BetterPlayerDataSource(
         BetterPlayerDataSourceType.network,
         "https://bitdash-a.akamaihd.net/content/MI201109210084_1/m3u8s/f08e80da-bf1d-4e3d-8899-f0f6155f6efa.m3u8",
       ),
     );
+
     dataSourceList.add(
       BetterPlayerDataSource(
         BetterPlayerDataSourceType.network,
         "https://multiplatform-f.akamaihd.net/i/multi/will/bunny/big_buck_bunny_,640x360_400,640x360_700,640x360_1000,950x540_1500,.f4v.csmil/master.m3u8",
       ),
     );
+
+    dataSourceList.add(
+      BetterPlayerDataSource(BetterPlayerDataSourceType.network,
+          "http://devimages.apple.com/iphone/samples/bipbop/bipbopall.m3u8"),
+    );
+
     dataSourceList.add(
       BetterPlayerDataSource(BetterPlayerDataSourceType.network,
           "https://multiplatform-f.akamaihd.net/i/multi/april11/sintel/sintel-hd_,512x288_450_b,640x360_700_b,768x432_1000_b,1024x576_1400_m,.mp4.csmil/master.m3u8"),
     );
+
     dataSourceList.add(
       BetterPlayerDataSource(BetterPlayerDataSourceType.network,
           "https://devstreaming-cdn.apple.com/videos/streaming/examples/img_bipbop_adv_example_fmp4/master.m3u8"),
     );
-    dataSourceList.add(
-      BetterPlayerDataSource(BetterPlayerDataSourceType.network,
-          "https://cph-p2p-msl.akamaized.net/hls/live/2000341/test/master.m3u8"),
-    );
-    return dataSourceList;
   }
 
-  void video(int index){
+  void playVideo(int index){
+    betterPlayerController.pause();
     this.index.value = index;
+    loadDataVideo();
+  }
+
+  void loadDataVideo(){
     betterPlayerController = BetterPlayerController(
         const BetterPlayerConfiguration(),
-        betterPlayerDataSource: dataSourceList[index]);
+        betterPlayerDataSource: dataSourceList[index.value]);
   }
 }

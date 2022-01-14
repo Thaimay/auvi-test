@@ -24,7 +24,7 @@ class VideoPlayerView extends StatelessWidget {
                   child: BetterPlayerPlaylist(
                       betterPlayerConfiguration: const BetterPlayerConfiguration(),
                       betterPlayerPlaylistConfiguration: const BetterPlayerPlaylistConfiguration(),
-                      betterPlayerDataSourceList:  _.createDataSet())
+                      betterPlayerDataSourceList:  _.dataSourceList)
               );
             }
             return AspectRatio(
@@ -43,7 +43,7 @@ class VideoPlayerView extends StatelessWidget {
                       return Container();
                     }
                     return InkWell(
-                      onTap: () => controller.video(index),
+                      onTap: () => controller.playVideo(index),
                       child: Column(
                         children: [
                           Stack(
